@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import requests
 
-st.set_page_config(page_title="n8n Workflow Simplifier", page_icon="⚡")
-st.title("⚡ Unlimited n8n Workflow Simplifier")
-st.write("Verify your student status, paste your n8n logic, and get instant explanations.")
+st.set_page_config(page_title="Business & Automation Simplifier", page_icon="⚡")
+st.title("⚡ Unlimited Business & Tech Simplifier")
+st.write("Verify your student email, paste any business jargon or n8n code, and get a simple breakdown!")
 
 # 1. Configured Google Sheets CSV Endpoint
 GOOGLE_SHEET_CSV_URL = "https://google.com"
@@ -20,7 +20,7 @@ def get_authorized_emails():
         return set()
 
 student_email = st.text_input("Registered Course Email:", placeholder="student@example.com").strip().lower()
-student_input = st.text_area("Paste your n8n code/concept here:", height=200, placeholder="Example: {{ $json.body.id }} or paste raw node JSON...")
+student_input = st.text_area("Paste your business jargon, corporate buzzwords, or n8n code here:", height=200, placeholder="Example: ARR, B2B, Webhook, or raw node JSON...")
 
 if st.button("Verify & Simplify Layout", type="primary"):
     authorized_students = get_authorized_emails()
@@ -30,18 +30,33 @@ if st.button("Verify & Simplify Layout", type="primary"):
     elif student_email not in authorized_students:
         st.error("❌ Access Denied. This email is not registered in our student database.")
     elif not student_input.strip():
-        st.warning("Please paste some n8n text or code first!")
+        st.warning("Please paste some text or code first!")
     else:
-        with st.spinner("Analyzing your n8n setup..."):
+        with st.spinner("Analyzing and simplifying..."):
             try:
                 url = f"https://googleapis.com{GEMINI_API_KEY}"
+                
+                # High school targeted translation instruction prompt
+                instruction = (
+                    "You are an elite Business & Automation Mentor speaking directly to high school students. "
+                    "Your objective is to take complex business jargon, corporate buzzwords, tech slang, or n8n workflow logic "
+                    "and explain it using simple English, high school vocabulary, and highly relatable everyday analogies "
+                    "(like gaming, sports, social media, school projects, or part-time jobs).\n\n"
+                    "CRITICAL STYLE RULES:\n"
+                    "- Ban all corporate fluff. Do not use words like 'synergy', 'leveraging', or 'optimization' without translating them first.\n"
+                    "- Break down concepts step-by-step using bullet points and bold visual anchors.\n"
+                    "- Use a friendly, encouraging, and peer-like tone—never sound like a rigid textbook.\n\n"
+                    f"Here is the term or code the student needs broken down: {student_input}"
+                )
+                
                 payload = {
                     "contents": [{
                         "parts": [{
-                            "text": f"You are an expert n8n course assistant. Translate complex n8n workflows, expressions, or raw JSON code into beginner-friendly layman terms. Use clean markdown formatting, bold markers, and bullet points. Here is the n8n data: {student_input}"
+                            "text": instruction
                         }]
                     }]
                 }
+                
                 response = requests.post(url, json=payload)
                 if response.status_code == 200:
                     result_json = response.json()
