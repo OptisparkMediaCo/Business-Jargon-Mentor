@@ -60,7 +60,7 @@ if st.button("Verify & Simplify Layout", type="primary"):
                 response = requests.post(url, json=payload)
                 if response.status_code == 200:
                     result_json = response.json()
-                    ai_explanation = result_json['candidates'][0]['content']['parts'][0]['text']
+                    ai_explanation = result_json['candidates']['content']['parts']['text']
                     st.success("Analysis Complete!")
                     st.markdown("### 📋 Plain English Breakdown")
                     st.markdown(ai_explanation)
