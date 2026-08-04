@@ -8,7 +8,7 @@ st.write("Verify your student email, paste any business jargon or n8n code, and 
 
 # 1. Configured Google Sheets CSV Endpoint
 GOOGLE_SHEET_CSV_URL = "https://google.com"
-GEMINI_API_KEY = st.secretsAQ.Ab8RN6IP9VixN2lbRyTh0zLYoUbHyrZL_kWeVAjYQ_JEJKtDDQ
+GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 
 @st.cache_data(ttl=60)
 def get_authorized_emails():
