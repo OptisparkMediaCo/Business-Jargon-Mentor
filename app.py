@@ -6,8 +6,8 @@ st.set_page_config(page_title="n8n Workflow Simplifier", page_icon="⚡")
 st.title("⚡ Unlimited n8n Workflow Simplifier")
 st.write("Verify your student status, paste your n8n logic, and get instant explanations.")
 
-# Paste your published Google Sheet CSV URL here
-GOOGLE_SHEET_CSV_URL = "PASTE_YOUR_PUBLIC_GOOGLE_SHEET_CSV_URL_HERE"
+# 1. Configured Google Sheets CSV Endpoint
+GOOGLE_SHEET_CSV_URL = "https://google.com"
 GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 
 @st.cache_data(ttl=60)
